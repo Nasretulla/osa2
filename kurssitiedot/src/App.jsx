@@ -11,9 +11,7 @@ const Part = (props) => {
   console.log(props.osat)
   
   return <>
-      <p>{props.osat.name} {props.osat.exercises}</p>
-      
-    
+      <p>{props.osat.name} {props.osat.exercises}</p>    
   </>
 };
 
@@ -24,6 +22,7 @@ const Content = (props) => {
       <Part  osat={props.sisalto[0]} />
       <Part osat={props.sisalto[1]} />
       <Part osat={props.sisalto[2]} />
+      <Part osat={props.sisalto[3]} />
     </>
   );
 };
@@ -33,9 +32,21 @@ const Course = (props) => {
     <>
       <Header header={props.kurssi.name} />
       <Content  sisalto= {props.kurssi.parts}/>
+      <Total    sum={props.kurssi.parts} />
     </>
   );
 };
+
+const Total =(props) =>{
+ const summa = props.sum.reduce((sum , lukumaara) => sum + lukumaara.exercises, 0)
+
+  return(
+    <>
+     <p>total of {summa} exercises </p>
+    </>
+  )
+
+}
 
 const App = () => {
   const course = {
@@ -56,6 +67,12 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
