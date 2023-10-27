@@ -1,37 +1,27 @@
 
-
 const Header = ({header}) => {
   return (
-    
-      <h2> {header}  </h2>
-    
+      <h2> {header}  </h2> 
   );
 };
 const Part = (props) => {
+  console.log('propsin osat:', props);
 
-  if (!props.osat) {
-    return null;
-  }
-  console.log('propsin osat:', props.osat);
-
-  
-
- 
   return <>
-  <p>{props.osat.name} {props.osat.exercises}</p>
+  <p>{props.pala.name} {props.pala.exercises}</p>
      
   </>
 };
 
 const Content = (props) => {
-  
+  console.log('sisalto:', props.sisalto);
 
   return (
     <>
-      <Part osat={props.sisalto[0]} />
-      <Part osat={props.sisalto[1]} />
-      <Part osat={props.sisalto[2]} />
-      <Part osat={props.sisalto[3]} />
+      {props.sisalto.map((osa, indeksi)=> (
+        <Part key={indeksi} pala={osa} />
+      ))}
+
     </>
   );
 };
@@ -51,13 +41,11 @@ const Total =(props) =>{
  const summa = props.sum.reduce((sum , lukumaara) => sum + lukumaara.exercises, 0)
   return(
     <>
-     <p>total of {summa} exercises </p>
+     <strong>total of </strong> {summa} <strong>exercises </strong>
     </>
   )
 
 }
-
-
 const App = () => {
   const courses = [
     {
