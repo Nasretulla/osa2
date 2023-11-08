@@ -6,19 +6,33 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
 
+  const clickHandler = (event) => {
+    console.log(event.target.value)
+    setNewName(event.target.value)
+
+  }
+
+  const addPerson = (event) => {
+    
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
+      <form onSubmit={addPerson}>
         <div>
-          name: <input />
+          name: <input value={newName} onChange={clickHandler}  />
+          
         </div>
         <div>
-          <button type="submit">add</button>
+          <button  type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      ...
+      {persons.map((henkilo) => (
+      <p key={henkilo.name}>{henkilo.name}</p>
+      ))}
+     
     </div>
   )
 
