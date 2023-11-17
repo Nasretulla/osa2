@@ -45,6 +45,18 @@ const App = () => {
       const uusHenkilo = { name: newName, numero: number };
       setPersons(persons.concat(uusHenkilo));
       setNewName("");
+
+
+      axios
+      .post('http://localhost:3001/persons', uusHenkilo)
+      .then(response => {
+        console.log(response)
+        const addedHenkilo = (persons.concat(response.data))
+        setNewName('')
+        setNumber('')
+
+      })
+    
     }
   };
 
