@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './Filter';
 import PersonForm from './PersonForm';
 import Persons  from "./Persons";
+import servicePeople from './services/people'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,13 +12,11 @@ const App = () => {
   const [find, setFind] = useState("");
 
   useEffect(() => {
-    console.log("effect");
-
-    axios
-    .get("http://localhost:3001/persons")
-    .then((response) =>{
-      console.log("promise fulfilled")
-      setPersons(response.data)
+    console.log("use effect");
+    servicePeople
+    .getAll()
+    .then(initialResponse => {
+      setPersons(initialResponse);
     })
   }, [])
   console.log("render", persons.length, "persons");
@@ -47,15 +46,13 @@ const App = () => {
       setNewName("");
 
 
-      axios
-      .post('http://localhost:3001/persons', uusHenkilo)
-      .then(response => {
-        console.log(response)
-        const addedHenkilo = (persons.concat(response.data))
+      servicePeople
+      .create(uusHenkilo)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNumber('')
-
-      })
+      });
     
     }
   };
@@ -68,10 +65,10 @@ const App = () => {
     setNumber("");
   };
 
- const findPerson = persons.filter((person) =>
- person.name.toLowerCase().includes(find.toLocaleLowerCase())
- 
- )
+  const findPerson = persons.filter((person) =>
+  person.name && person.name.toLowerCase().includes(find.toLowerCase())
+);
+
 
   return (
     <div>
