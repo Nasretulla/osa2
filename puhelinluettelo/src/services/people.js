@@ -18,8 +18,11 @@ const remove = (id) => {
 };
 
 const update = (id, newObject) => {
+  
   const request = axios.put(`${baseUrl}/${id}`, newObject);
+  console.log(`Aloitetaan henkilön ${id} päivitys, uudet tiedot:`, newObject);
   return request.then(response => response.data);
+  
 };
 
 export default {
