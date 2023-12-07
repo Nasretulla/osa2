@@ -10,6 +10,9 @@ const App = () => {
   //users input
   const [findCountryName, setFindCountryName] = useState("");
 
+  // users selectioin
+  const [selectedCountry, setSelectedCountry] = useState('');
+
   useEffect(() => {
     console.log("fetching data", allCountries);
     axios
@@ -24,6 +27,13 @@ const App = () => {
     setFindCountryName(event.target.value);
   };
 
+  //handling users selection
+  const handleShowDetails = (country) =>{
+    setSelectedCountry(country);
+    
+  }
+
+  //filtering countries
   const filteredCountries = findCountryName
     ? allCountries.filter((country) =>
         country.name.common
@@ -45,10 +55,14 @@ const App = () => {
       ) : (
         <ul>
           {filteredCountries.map((country, index) => (
-            <li key={index}>{country.name.common}</li>
+            <li key={index}>{country.name.common}
+            <button onClick={() => handleShowDetails(country)}>Show more info </button>
+            
+            </li>
           ))}
         </ul>
       )}
+      {selectedCountry && <CountryDetails country={selectedCountry} />}
     </>
   );
 };
