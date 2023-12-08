@@ -11,14 +11,13 @@ const App = () => {
   const [findCountryName, setFindCountryName] = useState("");
 
   // users selectioin
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState("");
 
   useEffect(() => {
     console.log("fetching data", allCountries);
     axios
       .get("https://studies.cs.helsinki.fi/restcountries/api/all")
       .then((response) => {
-        console.log(response.data);
         setAllCountries(response.data);
       });
   }, []);
@@ -28,11 +27,9 @@ const App = () => {
   };
 
   //handling users selection
-  const handleShowDetails = (country) =>{
+  const handleShowDetails = (country) => {
     setSelectedCountry(country);
-    
-  }
-
+  };
   //filtering countries
   const filteredCountries = findCountryName
     ? allCountries.filter((country) =>
@@ -41,13 +38,11 @@ const App = () => {
           .includes(findCountryName.toLowerCase())
       )
     : allCountries;
-
   return (
     <>
       <form>
         find country <input value={findCountryName} onChange={handleChange} />
       </form>
-
       {filteredCountries.length > 10 ? (
         <p>Too many matches, specify another filter</p>
       ) : filteredCountries.length === 1 ? (
@@ -55,15 +50,23 @@ const App = () => {
       ) : (
         <ul>
           {filteredCountries.map((country, index) => (
-            <li key={index}>{country.name.common}
-            <button onClick={() => handleShowDetails(country)}>Show more info </button>
-            
+            <li key={index}>
+              {country.name.common}
+              <button onClick={() => handleShowDetails(country)}>
+                Show more info{" "}
+              </button>
             </li>
+            
+            
           ))}
+         
         </ul>
-      )}
+     
+      )}  
       {selectedCountry && <CountryDetails country={selectedCountry} />}
+
     </>
+    
   );
 };
 
